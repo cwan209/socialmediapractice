@@ -20,10 +20,50 @@
 
 <div class="container">
 
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <!-- Brand display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    Brand
+<!--                    <img src="image/logo.jpg">-->
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <!-- Home, Profile, Message Links -->
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Message</a></li>
+                </ul>
+
+                <!-- Search Bar Currently Unavailable -->
+<!--                <form class="navbar-form navbar-right">-->
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" class="form-control" placeholder="Search">-->
+<!--                    </div>-->
+<!--                    <button type="submit" class="btn btn-default">Search</button>-->
+<!--                </form>-->
+
+                <!-- Login and Signup -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Sign Up</a></li>
+                </ul>
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
     <div id="main-content" class="content row">
 
         <!-- Bar on the Left -->
-        <div  class="sidebar col col-lg-3">
+        <div id="left-sidebar" class="sidebar col col-lg-3">
 
             <!-- Profile section-->
             <div id="profile" class="content-block">
@@ -45,7 +85,7 @@
         </div>
 
         <!-- Main Post Area -->
-        <div class="mainposts col col-lg-6 ">
+        <div id="mainposts" class="col col-lg-6">
 
             <!-- Post Input Area -->
             <div id="post-input-container" class="content-block form-group">
@@ -54,7 +94,7 @@
             </div>
 
             <!-- Post Display Area -->
-            <div id="posts-container">
+            <div class="posts-container">
                 <div class="post-container row">
                     <div id="post-portrait" class="media-left">
                         <img src="image/profile-image/hardy.jpg" class="img-circle">
@@ -63,17 +103,17 @@
                         <div id="post-body-name">Tome Hardy</div>
                         <div id="post-body-text"> Aenean lacinia bibendum nulla sed consectetur. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
                         </div>
-                        <div id="post-body-gallery photogrid">
-                            <img src="image/landscape/1.jpg" >
-                            <img src="image/landscape/2.jpg" >
-                            <img src="image/landscape/3.jpg" >
-                            <img src="image/landscape/4.jpg" >
-                            <img src="image/landscape/5.jpg" >
-                            <img src="image/landscape/6.jpg" >
-                            <img src="image/landscape/7.jpg" >
-                            <img src="image/landscape/8.jpg" >
-                            <img src="image/landscape/9.jpg" >
-                        </div>
+<!--                        <div id="post-body-gallery photogrid">-->
+<!--                            <img src="image/landscape/1.jpg" >-->
+<!--                            <img src="image/landscape/2.jpg" >-->
+<!--                            <img src="image/landscape/3.jpg" >-->
+<!--                            <img src="image/landscape/4.jpg" >-->
+<!--                            <img src="image/landscape/5.jpg" >-->
+<!--                            <img src="image/landscape/6.jpg" >-->
+<!--                            <img src="image/landscape/7.jpg" >-->
+<!--                            <img src="image/landscape/8.jpg" >-->
+<!--                            <img src="image/landscape/9.jpg" >-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -86,8 +126,8 @@
             <!-- Follow Area Container -->
             <div id="people-to-follow-container container">
 
-                    <!-- Title of the Follow Area -->
-                <div class="container row">
+                <!-- Title of the Follow Area -->
+                <div class="row">
                     <div class="col col-lg-2">Likes</div>
                     <div class="col col-lg-10">
                         <a href="">
@@ -96,7 +136,7 @@
                     </div>
                 </div>
 
-                    <!-- People to Follow -->
+                <!-- People to Follow -->
                 <div class="follow-block media">
                     <div id="follow-portrait" class="media-left">
                         <img src="image/profile-image/putin.jpg" class="image-circle">
