@@ -1,3 +1,5 @@
+<?php require_once("include/initialize.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +10,4 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>SMP by Luke</title>
-    <link href="_/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
