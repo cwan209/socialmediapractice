@@ -11,7 +11,7 @@
         $user->username = $_POST['username'];
         $user->password = $_POST['password'];
 
-        if (User::checkrepeat($user->username, $user->password)) {
+        if (!User::is_repeated($user->username, $user->password)) {
             // create new user
             if ($user->create()) {
                 $result = 'User successfully created.';

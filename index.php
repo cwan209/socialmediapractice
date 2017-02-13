@@ -26,6 +26,25 @@ if (isset($_POST['submit'])) {
     }
 }
 
+if (isset($_GET)){
+    $followid = $_GET['followid'];
+    $followedid = $_GET['followedid'];
+
+    if ($_GET['follow'] == 1) {
+        if(Relation::follow($followid,$followedid)){
+            $followSuccess = true;
+        } else {
+
+        }
+    } else if ($_GET['follow'] == 0){
+        if(Relation::unfollow($followid,$followedid)){
+            $unfollowSuccess = true;
+        } else {
+
+        }
+    }
+}
+
 ?>
 
 <body id="home">
@@ -125,9 +144,9 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col col-lg-2">Likes</div>
                         <div class="col col-lg-10">
-                            <a href="">
-                                view all
-                            </a>
+<!--                            <a href="">-->
+<!--                                view all-->
+<!--                            </a>-->
                         </div>
                     </div>
 
@@ -153,7 +172,15 @@ if (isset($_POST['submit'])) {
                         <div id="follow-body" class="media-body">
                             <div id="follow-name"><?php echo $otherUser->full_name(); ?></div>
                             <div id="follow-button">
-                                <a class="btn btn-default" href="#" role="button">Follow</a>
+                                <?php if (!Relation::is_followed($user->userid, $otherUser->userid)) {?>
+                                <a class="btn btn-default"
+                                   href="index.php?followid=<?php echo $user->userid; ?>&followedid=<?php echo $otherUser->userid; ?>&follow=1"
+                                   role="button">Follow</a>
+                                <?php } else {?>
+                                <a class="btn btn-default"
+                                   href="index.php?followid=<?php echo $user->userid; ?>&followedid=<?php echo $otherUser->userid; ?>&follow=0"
+                                   role="button">Unfollow</a>
+                                <?php }?>
                             </div>
                         </div>
                     </div>

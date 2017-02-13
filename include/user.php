@@ -34,7 +34,7 @@ class User extends DatabaseObject {
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
-    public static function checkrepeat($username="", $password="") {
+    public static function is_repeated($username="", $password="") {
         global $database;
         $username = $database->escape_value($username);
         $password = $database->escape_value($password);
@@ -44,7 +44,7 @@ class User extends DatabaseObject {
 
         $result_array = self::find_by_sql($sql);
 
-        return empty($result_array) ? true : false;
+        return !empty($result_array) ? true : false;
     }
 
 
