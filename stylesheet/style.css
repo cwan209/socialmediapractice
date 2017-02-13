@@ -1,0 +1,18 @@
+.portrait-image {
+    width: 50px;
+    height: 50px;
+}
+
+#index-portrait {
+    width: 200px;
+    height: 200px;
+}
+
+#post-body-name {
+    font-weight:bold;
+    font-size:120%;
+}
+
+.post-container {
+    margin-bottom: 1em;
+}

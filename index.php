@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
                 <!-- Profile section-->
                 <div id="profile" class="content-block">
                     <div id="profile-image">
-                        <img id="index-portrait" class="img-circle" src="<?php
+                        <img id="index-portrait" class="img-circle portrait-image" src="<?php
                         if (isset($portrait)) {
                             $src = $portrait->image_path();
                             echo $src;
@@ -78,16 +78,18 @@ if (isset($_POST['submit'])) {
                 </div>
 
                 <!-- Post Display Area -->
-                <?php
-                $sql = 'select * from post where userid = ' . $userid . ' order by ts desc';
-                $posts = Post::find_by_sql($sql);
-                foreach ($posts as $post) {
-                ?>
+
 
                 <div class="posts-container">
+
+                    <?php
+                    $sql = 'select * from post where userid = ' . $userid . ' order by ts desc';
+                    $posts = Post::find_by_sql($sql);
+                    foreach ($posts as $post) {
+                    ?>
                     <div class="post-container row">
                         <div id="post-portrait" class="media-left">
-                            <img src="<?php
+                            <img class="img-circle portrait-image" src="<?php
                             if (isset($portrait)) {
                                 $src = $portrait->image_path();
                                 echo $src;
@@ -101,21 +103,23 @@ if (isset($_POST['submit'])) {
                             <div id="post-body-name"><?php echo $user->full_name(); ?></div>
                             <div id="post-body-text"><?php echo $post->post_content; ?>
                             </div>
+                            <div id="post-body-time" class="text-right">
+                                <?php echo $post->ts; ?>
+                            </div>
                             <div id="post-body-gallery photogrid">
                             </div>
                         </div>
                     </div>
+
+                    <?php } ?>
                 </div>
-
-                <?php } ?>
-
             </div>
 
             <!-- Bar on the Right -->
             <div id="right-sidebar" class="sidebar col col-lg-3">
 
                 <!-- Follow Area Container -->
-                <div id="people-to-follow-container container">
+                <div id="people-to-follow-container">
 
                     <!-- Title of the Follow Area -->
                     <div class="row">
@@ -135,7 +139,7 @@ if (isset($_POST['submit'])) {
                     ?>
                     <div class="follow-block media">
                         <div id="follow-portrait" class="media-left">
-                            <img src="<?php
+                            <img class="img-circle portrait-image" src="<?php
                             if ($otherUser->portraitid!=0) {
                                 $otherPortrait = Photo::find_by_id($otherUser->portraitid);
                                 $src = $otherPortrait->image_path();
