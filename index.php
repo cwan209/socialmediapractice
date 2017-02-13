@@ -1,5 +1,33 @@
 <?php include_once("include/header.php"); ?>
 
+<?php
+if(!$session->is_logged_in()) {redirect_to("login.php");}
+
+$userid = $session->user_id;
+$user = User::find_by_id($userid);
+$photoid = $user->portraitid;
+
+if ($photoid!=0) {
+    $portrait = Photo::find_by_id($photoid);
+}
+
+$full_name = $user->full_name();
+$motto = $user->motto;
+
+if (isset($_POST['submit'])) {
+
+//  post instantiation
+    $post = new Post();
+    $post->userid = $userid;
+    $post->post_content = $_POST['posttext'];
+
+//  create post
+    if ($post->create()) {
+    }
+}
+
+?>
+
 <body id="home">
 
     <?php include_once("include/navigation.php"); ?>
@@ -14,17 +42,25 @@
                 <!-- Profile section-->
                 <div id="profile" class="content-block">
                     <div id="profile-image">
-                        <img src="image/profile-image/hardy.jpg" class="img-circle">
+                        <img id="index-portrait" class="img-circle" src="<?php
+                        if (isset($portrait)) {
+                            $src = $portrait->image_path();
+                            echo $src;
+                        } else {
+                            $src = 'image/blank-user.jpg';
+                            echo $src;
+                        }
+                        ?>">
                     </div>
                     <div id="profile-name">
-                        Tom Hardy
+                        <?php echo $full_name; ?>
                     </div>
                     <div id="profile-sentence">
-                        I starred in Batman as Bane.
+                        <?php echo $motto; ?>
                     </div>
                     <div id="profile-network">
-                        <div id="profile-followed">Followed:4</div>
-                        <div id="profile-following">Following1</div>
+                        <div id="profile-followed">Followed: <?php echo $user->number_of_followed; ?></div>
+                        <div id="profile-following">Following: <?php echo $user->number_of_follow; ?></div>
                     </div>
                 </div>
 
@@ -35,34 +71,43 @@
 
                 <!-- Post Input Area -->
                 <div id="post-input-container" class="content-block form-group">
-                    <input type="text" class="form-control" id="post-input" placeholder="Write Anythng">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <form action="index.php" method="post">
+                        <input type="text" name="posttext" class="form-control" id="post-input" placeholder="Write Anythng">
+                        <button type="submit" name="submit" class="btn btn-default">Post it</button>
+                    </form>
                 </div>
 
                 <!-- Post Display Area -->
+                <?php
+                $sql = 'select * from post where userid = ' . $userid;
+                $posts = Post::find_by_sql($sql);
+                foreach ($posts as $post) {
+                ?>
+
                 <div class="posts-container">
                     <div class="post-container row">
                         <div id="post-portrait" class="media-left">
-                            <img src="image/profile-image/hardy.jpg" class="img-circle">
+                            <img src="<?php
+                            if (isset($portrait)) {
+                                $src = $portrait->image_path();
+                                echo $src;
+                            } else {
+                                $src = 'image/blank-user.jpg';
+                                echo $src;
+                            }
+                            ?>">
                         </div>
                         <div id="post-body" class="media-body">
-                            <div id="post-body-name">Tome Hardy</div>
-                            <div id="post-body-text"> Aenean lacinia bibendum nulla sed consectetur. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                            <div id="post-body-name"><?php echo $userid; ?></div>
+                            <div id="post-body-text"><?php echo $post->post_content; ?>
                             </div>
-    <!--                        <div id="post-body-gallery photogrid">-->
-    <!--                            <img src="image/landscape/1.jpg" >-->
-    <!--                            <img src="image/landscape/2.jpg" >-->
-    <!--                            <img src="image/landscape/3.jpg" >-->
-    <!--                            <img src="image/landscape/4.jpg" >-->
-    <!--                            <img src="image/landscape/5.jpg" >-->
-    <!--                            <img src="image/landscape/6.jpg" >-->
-    <!--                            <img src="image/landscape/7.jpg" >-->
-    <!--                            <img src="image/landscape/8.jpg" >-->
-    <!--                            <img src="image/landscape/9.jpg" >-->
-    <!--                        </div>-->
+                            <div id="post-body-gallery photogrid">
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <?php } ?>
 
             </div>
 

@@ -5,9 +5,10 @@ require_once(LIB_PATH.DS.'database.php');
 class User extends DatabaseObject {
 
     protected static $table_name="user";
-    protected static $db_fields = array('username', 'password', 'firstname', 'lastname', 'motto', 'number_of_follow', 'number_of_followed', 'portrait_url', 'galleryid');
+    protected static $db_fields = array('userid', 'username', 'password', 'firstname', 'lastname', 'motto', 'number_of_follow', 'number_of_followed', 'galleryid', 'portraitid');
+    protected static $db_fields_for_insert = array('username', 'password', 'firstname', 'lastname', 'motto', 'number_of_follow', 'number_of_followed', 'galleryid', 'portraitid');
 
-    public $id;
+    public $userid;
     public $username;
     public $password;
     public $firstname;
@@ -15,8 +16,9 @@ class User extends DatabaseObject {
     public $motto;
     public $number_of_follow;
     public $number_of_followed;
-    public $portrait_url;
     public $galleryid;
+    public $portraitid;
+
 
     public static function authenticate($username="", $password="") {
         global $database;
@@ -59,9 +61,9 @@ class User extends DatabaseObject {
         global $database;
 
         $sql = "insert into ".static::$table_name . " (";
-        $sql .= join(", ", static::$db_fields);
+        $sql .= join(", ", static::$db_fields_for_insert);
         $sql .= ") values ('";
-        $sql .= $this->username . "','" . $this->password . "','" . $this->firstname . "','" . $this->lastname . "', '', 0, 0, '', 0";
+        $sql .= $this->username . "','" . $this->password . "','" . $this->firstname . "','" . $this->lastname . "', '', 0, 0, 0, 0";
         $sql .= ")";
 
         if($database->query($sql)) {
@@ -72,8 +74,44 @@ class User extends DatabaseObject {
         }
 
         return $sql;
+    }
+
+    public static function get_photoid($userid) {
+        $result_array = self::find_by_id($userid);
+        $photoid = $result_array['portraitid'];
+        return $photoid;
 
     }
+
+    //override
+    public static function find_by_id($id=0) {
+        global $database;
+        $result_array = static::find_by_sql("select * from "  . static::$table_name .
+            " where userid ={$id} limit 1");
+        return !empty($result_array) ? array_shift($result_array) : false;
+    }
+
+    public static function updatePhotoid($photoid, $userid) {
+        global $database;
+
+        $sql = 'update user set portraitid = ' . $photoid . ' where userid = '
+         . $userid;
+
+        $database->query($sql);
+        return ($database->affected_rows() == 1) ? true : false;
+    }
+
+    public static function updateMotto($motto, $userid) {
+        global $database;
+
+        $sql = "update user set motto = '" . $motto . "'where userid = "
+            . $userid;
+
+        $database->query($sql);
+        return ($database->affected_rows() == 1) ? true : false;
+    }
+
+
 }
 
 ?>

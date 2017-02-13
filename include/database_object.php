@@ -34,6 +34,12 @@ class DatabaseObject {
         return !empty($result_array) ? array_shift($result_array) : false;
     }
 
+    public static function findsql($id=0) {
+
+        return "select * from "  . static::$table_name .
+            " where id ={$id} limit 1";
+    }
+
     public static function instantiate($record) {
 
         $object = new static;
