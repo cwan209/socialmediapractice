@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 
                 <!-- Post Display Area -->
                 <?php
-                $sql = 'select * from post where userid = ' . $userid;
+                $sql = 'select * from post where userid = ' . $userid . ' order by ts desc';
                 $posts = Post::find_by_sql($sql);
                 foreach ($posts as $post) {
                 ?>
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
                             ?>">
                         </div>
                         <div id="post-body" class="media-body">
-                            <div id="post-body-name"><?php echo $userid; ?></div>
+                            <div id="post-body-name"><?php echo $user->full_name(); ?></div>
                             <div id="post-body-text"><?php echo $post->post_content; ?>
                             </div>
                             <div id="post-body-gallery photogrid">
@@ -128,17 +128,33 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <!-- People to Follow -->
+                    <?php
+                    $sql = 'select * from user where userid <> ' . $userid . ' order by userid';
+                    $users = User::find_by_sql($sql);
+                    foreach ($users as $otherUser) {
+                    ?>
                     <div class="follow-block media">
                         <div id="follow-portrait" class="media-left">
-                            <img src="image/profile-image/putin.jpg" class="image-circle">
+                            <img src="<?php
+                            if ($otherUser->portraitid!=0) {
+                                $otherPortrait = Photo::find_by_id($otherUser->portraitid);
+                                $src = $otherPortrait->image_path();
+                                echo $src;
+                            }  else {
+                                $src = 'image/blank-user.jpg';
+                                echo $src;
+                            }
+                            ?>">
                         </div>
                         <div id="follow-body" class="media-body">
-                            <div id="follow-name">Putin</div>
+                            <div id="follow-name"><?php echo $otherUser->full_name(); ?></div>
                             <div id="follow-button">
                                 <a class="btn btn-default" href="#" role="button">Follow</a>
                             </div>
                         </div>
                     </div>
+
+                    <?php } ?>
 
                 </div>
 
