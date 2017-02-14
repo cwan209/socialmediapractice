@@ -55,6 +55,25 @@ class Relation extends DatabaseObject {
         return ($database->affected_rows() == 1) ? true : false;
     }
 
+    public static function get_number_of_follow($userid) {
+        global $database;
+
+        $sql = "select count(*) from " . static::$table_name . " where followid = " . $userid;
+        $result_set = $database->query($sql);
+        $row = $database->fetch_array($result_set);
+        return array_shift($row);
+    }
+
+    public static function get_number_of_followed($userid) {
+        global $database;
+
+        $sql = "select count(*) from " . static::$table_name . " where followedid = " . $userid;
+        $result_set = $database->query($sql);
+        $row = $database->fetch_array($result_set);
+        return array_shift($row);
+    }
+
+
 
 
 }

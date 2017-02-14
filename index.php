@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_GET)){
+if (isset($_GET['followid'])){
     $followid = $_GET['followid'];
     $followedid = $_GET['followedid'];
 
@@ -78,8 +78,8 @@ if (isset($_GET)){
                         <?php echo $motto; ?>
                     </div>
                     <div id="profile-network">
-                        <div id="profile-followed">Followed: <?php echo $user->number_of_followed; ?></div>
-                        <div id="profile-following">Following: <?php echo $user->number_of_follow; ?></div>
+                        <div id="profile-followed">Followed: <?php echo Relation::get_number_of_followed($userid); ?></div>
+                        <div id="profile-following">Following: <?php echo Relation::get_number_of_follow($userid); ?></div>
                     </div>
                 </div>
 
@@ -102,14 +102,38 @@ if (isset($_GET)){
                 <div class="posts-container">
 
                     <?php
-                    $sql = 'select * from post where userid = ' . $userid . ' order by ts desc';
+                    $sql = 'select * from follow where followid = ' . $userid;
+                    $follows = Relation::find_by_sql($sql);
+                    $postArray = [];
+
+                    // Write Query for posts by timestamp
+                    $sql = 'select * from post where ';
+                    $sqlarray = array();
+                    foreach ($follows as $relation) {
+                        $sqlsnippet = 'userid = ' . $relation->followedid;
+                        $sqlarray[] = $sqlsnippet;
+                    }
+
+                    $sqlarray[] = 'userid = ' . $userid;
+
+                    $sql2 = implode($sqlarray, ' or ');
+                    $sql = $sql . $sql2 . ' order by ts desc';
+
                     $posts = Post::find_by_sql($sql);
-                    foreach ($posts as $post) {
+
+                    foreach ($posts as $key=>$otherPost){
+
                     ?>
+
                     <div class="post-container row">
+
+                        <!--  post portrait-->
                         <div id="post-portrait" class="media-left">
-                            <img class="img-circle portrait-image" src="<?php
-                            if (isset($portrait)) {
+                            <img class="img-circle portrait-image" src="
+                            <?php
+                            $postUser = User::find_by_id($otherPost->userid);
+                            if ($postUser->portraitid!=0) {
+                                $portrait = Photo::find_by_id($postUser->portraitid);
                                 $src = $portrait->image_path();
                                 echo $src;
                             } else {
@@ -118,12 +142,18 @@ if (isset($_GET)){
                             }
                             ?>">
                         </div>
+
+                        <!--  post content-->
                         <div id="post-body" class="media-body">
-                            <div id="post-body-name"><?php echo $user->full_name(); ?></div>
-                            <div id="post-body-text"><?php echo $post->post_content; ?>
+                            <div id="post-body-name">
+                                <?php
+                                $postUser = User::find_by_id($otherPost->userid);
+                                echo $postUser->full_name(); ?>
+                            </div>
+                                <div id="post-body-text"><?php echo $otherPost->post_content; ?>
                             </div>
                             <div id="post-body-time" class="text-right">
-                                <?php echo $post->ts; ?>
+                                <?php echo $otherPost->ts; ?>
                             </div>
                             <div id="post-body-gallery photogrid">
                             </div>
@@ -144,9 +174,9 @@ if (isset($_GET)){
                     <div class="row">
                         <div class="col col-lg-2">Likes</div>
                         <div class="col col-lg-10">
-<!--                            <a href="">-->
-<!--                                view all-->
-<!--                            </a>-->
+                            <a href="followlist.php">
+                                view all
+                            </a>
                         </div>
                     </div>
 
