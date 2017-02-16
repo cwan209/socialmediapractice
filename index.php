@@ -26,24 +26,25 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_GET['followid'])){
-    $followid = $_GET['followid'];
-    $followedid = $_GET['followedid'];
-
-    if ($_GET['follow'] == 1) {
-        if(Relation::follow($followid,$followedid)){
-            $followSuccess = true;
-        } else {
-
-        }
-    } else if ($_GET['follow'] == 0){
-        if(Relation::unfollow($followid,$followedid)){
-            $unfollowSuccess = true;
-        } else {
-
-        }
-    }
-}
+// Follow Fuction for Sidebar on the Right
+//if (isset($_GET['followid'])){
+//    $followid = $_GET['followid'];
+//    $followedid = $_GET['followedid'];
+//
+//    if ($_GET['follow'] == 1) {
+//        if(Relation::follow($followid,$followedid)){
+//            $followSuccess = true;
+//        } else {
+//
+//        }
+//    } else if ($_GET['follow'] == 0){
+//        if(Relation::unfollow($followid,$followedid)){
+//            $unfollowSuccess = true;
+//        } else {
+//
+//        }
+//    }
+//}
 
 ?>
 
@@ -97,12 +98,6 @@ if (isset($_GET['followid'])){
                 </div>
 
                 <!-- Post Display Area -->
-<!--                --><?php
-//                $per_page = 5;
-//                $currnet_page = 1;
-//                $total_count = Post::count_all();
-//                $pagination = new Pagination();
-                ?>
 
                 <div class="posts-container" data-page="1">
 
@@ -190,6 +185,7 @@ if (isset($_GET['followid'])){
                     <?php
                     $sql = 'select * from user where userid <> ' . $userid . ' order by userid';
                     $users = User::find_by_sql($sql);
+
                     foreach ($users as $otherUser) {
                     ?>
                     <div class="follow-block media">
@@ -208,15 +204,23 @@ if (isset($_GET['followid'])){
                         <div id="follow-body" class="media-body">
                             <div id="follow-name"><?php echo $otherUser->full_name(); ?></div>
                             <div id="follow-button">
-                                <?php if (!Relation::is_followed($user->userid, $otherUser->userid)) {?>
-                                <a class="btn btn-default"
-                                   href="index.php?followid=<?php echo $user->userid; ?>&followedid=<?php echo $otherUser->userid; ?>&follow=1"
-                                   role="button">Follow</a>
-                                <?php } else {?>
-                                <a class="btn btn-default"
-                                   href="index.php?followid=<?php echo $user->userid; ?>&followedid=<?php echo $otherUser->userid; ?>&follow=0"
-                                   role="button">Unfollow</a>
-                                <?php }?>
+<!--                                --><?php //if (!Relation::is_followed($user->userid, $otherUser->userid)) {?>
+<!--                                <a class="btn btn-default"-->
+<!--                                   href="index.php?followid=--><?php //echo $user->userid; ?><!--&followedid=--><?php //echo $otherUser->userid; ?><!--&follow=1"-->
+<!--                                   role="button">Follow</a>-->
+<!--                                --><?php //} else {?>
+<!--                                <a class="btn btn-default"-->
+<!--                                   href="index.php?followid=--><?php //echo $user->userid; ?><!--&followedid=--><?php //echo $otherUser->userid; ?><!--&follow=0"-->
+<!--                                   role="button">Unfollow</a>-->
+<!--                                --><?php //}?><!---->
+
+                                <div class="btn btn-default followButton" data-follower=<?php echo $user->userid ?> data-followed=<?php echo $otherUser->userid ?> role="button">
+                                    <?php if (!Relation::is_followed($user->userid, $otherUser->userid)) {
+                                        echo 'follow';
+                                    }else{
+                                        echo 'unfollow';
+                                    }?>
+                                </div>
                             </div>
                         </div>
                     </div>

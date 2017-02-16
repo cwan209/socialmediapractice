@@ -47,16 +47,42 @@ window.onscroll = function(){
     if (successResponse){
         scrollReaction();
     }
-
 }
 
 function scrollReaction() {
 
     var content_height = home.offsetHeight;
+    // 0.2 is to make up for the minor differece between the screens
     var current_y = window.innerHeight + window.pageYOffset + 0.2;
-    console.log(content_height + '/' + current_y);
     if (current_y >= content_height){
         loadMore();
     }
+}
+
+var buttons = document.getElementsByClassName('followButton');
+
+for(i=0; i < buttons.length; i++) {
+    buttons.item(i).addEventListener("click", changeFollowRelation);
+}
+
+function changeFollowRelation() {
+
+    var followerid = this.getAttribute('data-follower');
+    var followedid = this.getAttribute('data-followed');
+
+    var url = 'include/ajax-relation.php?followerid=' + followerid + '&followedid=' + followedid;
+
+    $.ajax({
+        context: this,
+        method: "GET",
+        url: url,
+    })
+        .done(function( msg ) {
+            if (msg == 'true') {
+                $(this).text("unfollow");
+            } else if (msg == 'false'){
+                $(this).text("follow");
+            }
+        });
 
 }
