@@ -16,6 +16,7 @@ require_once(LIB_PATH.DS."user.php");
 require_once(LIB_PATH.DS."photo.php");
 require_once(LIB_PATH.DS."post.php");
 require_once(LIB_PATH . DS . "relation.php");
+require_once(LIB_PATH . DS . "pagination.php");
 
 
 ?>

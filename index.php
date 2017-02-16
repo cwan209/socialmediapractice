@@ -47,7 +47,7 @@ if (isset($_GET['followid'])){
 
 ?>
 
-<body id="home">
+<body id="home" data-user="<?php echo $userid;?>">
 
     <?php include_once("include/navigation.php"); ?>
 
@@ -97,9 +97,14 @@ if (isset($_GET['followid'])){
                 </div>
 
                 <!-- Post Display Area -->
+<!--                --><?php
+//                $per_page = 5;
+//                $currnet_page = 1;
+//                $total_count = Post::count_all();
+//                $pagination = new Pagination();
+                ?>
 
-
-                <div class="posts-container">
+                <div class="posts-container" data-page="1">
 
                     <?php
                     $sql = 'select * from follow where followid = ' . $userid;
@@ -117,7 +122,7 @@ if (isset($_GET['followid'])){
                     $sqlarray[] = 'userid = ' . $userid;
 
                     $sql2 = implode($sqlarray, ' or ');
-                    $sql = $sql . $sql2 . ' order by ts desc';
+                    $sql = $sql . $sql2 . ' order by ts desc limit 10';
 
                     $posts = Post::find_by_sql($sql);
 
@@ -125,7 +130,7 @@ if (isset($_GET['followid'])){
 
                     ?>
 
-                    <div class="post-container row">
+                    <div class="post-container row" >
 
                         <!--  post portrait-->
                         <div id="post-portrait" class="media-left">
@@ -161,6 +166,7 @@ if (isset($_GET['followid'])){
                     </div>
 
                     <?php } ?>
+
                 </div>
             </div>
 
