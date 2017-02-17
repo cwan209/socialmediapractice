@@ -98,12 +98,11 @@ if (isset($_POST['submit'])) {
 
                 <!-- Post Input Area -->
                 <div id="post-input-container" class="content-block form-group">
-                    <form action="index.php" method="post">
+                    <form action="index.php" method="post" name="post-input-form" id="post-input-form" >
                         <input type="text" name="posttext" class="form-control" id="post-input" placeholder="Write Anythng">
                         <div class="text-right">
                             <button type="submit" name="submit" class="btn btn-default" id="post-input-button">Post it!</button>
                         </div>
-
                     </form>
                 </div>
 

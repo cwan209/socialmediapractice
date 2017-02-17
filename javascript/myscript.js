@@ -1,6 +1,9 @@
 /**
  * Created by asus on 11/02/2017.
  */
+
+
+
 var successResponse = true;
 var mainPost = document.getElementById('mainposts');
 
@@ -86,3 +89,23 @@ function changeFollowRelation() {
         });
 
 }
+
+// post input validation
+var form = document.getElementById('post-input-form');
+
+form.addEventListener('submit', function(event){
+
+    var inputarea = document.getElementById('post-input');
+    var inputValue = document.forms["post-input-form"]["posttext"].value;
+
+    if (inputValue.trim().length == 0){
+        alert('The post cannot be empty.');
+        event.preventDefault();
+    } else if(inputValue.length > 200) {
+        alert('The post is too long.');
+        event.preventDefault();
+    }
+});
+
+
+
