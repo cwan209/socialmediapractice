@@ -43,10 +43,10 @@ foreach ($posts as $key=>$otherPost){
 
 ?>
 
-<div class="post-container row" >
+<div class="post-container row content-block" >
 
     <!--  post portrait-->
-    <div id="post-portrait" class="media-left">
+    <div class="post-portrait media-left">
         <img class="img-circle portrait-image" src="
                             <?php
         $postUser = User::find_by_id($otherPost->userid);
@@ -62,18 +62,18 @@ foreach ($posts as $key=>$otherPost){
     </div>
 
     <!--  post content-->
-    <div id="post-body" class="media-body">
-        <div id="post-body-name">
+    <div class="post-body media-body">
+        <div class="post-body-name">
             <?php
             $postUser = User::find_by_id($otherPost->userid);
             echo $postUser->full_name(); ?>
         </div>
-        <div id="post-body-text"><?php echo $otherPost->post_content; ?>
+        <div class="post-body-text"><?php echo $otherPost->post_content; ?>
         </div>
-        <div id="post-body-time" class="text-right">
+        <div class="post-body-time text-right">
             <?php echo $otherPost->ts; ?>
         </div>
-        <div id="post-body-gallery photogrid">
+        <div class="post-body-gallery photogrid">
         </div>
     </div>
 </div>

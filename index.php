@@ -78,9 +78,16 @@ if (isset($_POST['submit'])) {
                     <div id="profile-sentence">
                         <?php echo $motto; ?>
                     </div>
-                    <div id="profile-network">
-                        <div id="profile-followed">Followed: <?php echo Relation::get_number_of_followed($userid); ?></div>
-                        <div id="profile-following">Following: <?php echo Relation::get_number_of_follow($userid); ?></div>
+                    <div id="profile-relation">
+                        <div id="profile-label-container">
+                            <div id="profile-followed-label">Followed By:</div>
+                            <div id="profile-following-label">Following:</div>
+                        </div>
+                        <div id="profile-follow-container">
+                            <div id="profile-followed"><?php echo Relation::get_number_of_followed($userid); ?></div>
+                            <div id="profile-following"><?php echo Relation::get_number_of_follow($userid); ?></div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -93,12 +100,14 @@ if (isset($_POST['submit'])) {
                 <div id="post-input-container" class="content-block form-group">
                     <form action="index.php" method="post">
                         <input type="text" name="posttext" class="form-control" id="post-input" placeholder="Write Anythng">
-                        <button type="submit" name="submit" class="btn btn-default">Post it</button>
+                        <div class="text-right">
+                            <button type="submit" name="submit" class="btn btn-default" id="post-input-button">Post it!</button>
+                        </div>
+
                     </form>
                 </div>
 
                 <!-- Post Display Area -->
-
                 <div class="posts-container" data-page="1">
 
                     <?php
@@ -125,10 +134,10 @@ if (isset($_POST['submit'])) {
 
                     ?>
 
-                    <div class="post-container row" >
+                    <div class="post-container row content-block" >
 
                         <!--  post portrait-->
-                        <div id="post-portrait" class="media-left">
+                        <div class="media-left post-portrait">
                             <img class="img-circle portrait-image" src="
                             <?php
                             $postUser = User::find_by_id($otherPost->userid);
@@ -144,15 +153,15 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <!--  post content-->
-                        <div id="post-body" class="media-body">
-                            <div id="post-body-name">
+                        <div class="media-body post-body">
+                            <div class="post-body-name">
                                 <?php
                                 $postUser = User::find_by_id($otherPost->userid);
                                 echo $postUser->full_name(); ?>
                             </div>
-                                <div id="post-body-text"><?php echo $otherPost->post_content; ?>
+                                <div class="post-body-text"><?php echo $otherPost->post_content; ?>
                             </div>
-                            <div id="post-body-time" class="text-right">
+                            <div class="post-body-time text-right">
                                 <?php echo $otherPost->ts; ?>
                             </div>
                             <div id="post-body-gallery photogrid">
@@ -172,13 +181,8 @@ if (isset($_POST['submit'])) {
                 <div id="people-to-follow-container">
 
                     <!-- Title of the Follow Area -->
-                    <div class="row">
-                        <div class="col col-lg-2">Likes</div>
-                        <div class="col col-lg-10">
-                            <a href="followlist.php">
-                                view all
-                            </a>
-                        </div>
+                    <div class="content-block">
+                        <div>Other Users:</div>
                     </div>
 
                     <!-- People to Follow -->
@@ -188,7 +192,7 @@ if (isset($_POST['submit'])) {
 
                     foreach ($users as $otherUser) {
                     ?>
-                    <div class="follow-block media">
+                    <div class="follow-block media content-block">
                         <div id="follow-portrait" class="media-left">
                             <img class="img-circle portrait-image" src="<?php
                             if ($otherUser->portraitid!=0) {

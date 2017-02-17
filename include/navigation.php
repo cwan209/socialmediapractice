@@ -1,5 +1,5 @@
 <!-- Navigation Bar -->
-<nav class="navbar navbar-default">
+<nav id="navigation-bar" class="navbar navbar-default">
     <div class="container-fluid">
 
         <!-- Brand display -->
@@ -21,12 +21,14 @@
             </ul>
 
             <!-- Search Bar Currently Unavailable -->
-            <!--                <form class="navbar-form navbar-right">-->
-            <!--                    <div class="form-group">-->
-            <!--                        <input type="text" class="form-control" placeholder="Search">-->
-            <!--                    </div>-->
-            <!--                    <button type="submit" class="btn btn-default">Search</button>-->
-            <!--                </form>-->
+<!--            <div id="serach-bar">-->
+<!--                <form class="navbar-form navbar-right">-->
+<!--                    <div class="form-group">-->
+<!--                        <input id="search" type="text" name="q" class="form-control" placeholder="Search">-->
+<!--                    </div>-->
+<!--                    <button type="submit" value="submit" class="btn btn-default">Search</button>-->
+<!--                </form>-->
+<!--            </div>-->
 
             <!-- Login and Signup -->
             <ul class="nav navbar-nav navbar-right">

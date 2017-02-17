@@ -47,7 +47,7 @@ $motto = $user->motto;
 
 ?>
 
-<body id="profile">
+<body id="profile-page">
 
 <?php include_once("include/navigation.php"); ?>
 
@@ -56,7 +56,7 @@ $motto = $user->motto;
     <div id="edit-form">
 
         <div>
-            <img id="profile-portrait" class="img-circle" src="<?php
+            <img id="profile-portrait" src="<?php
                 if (isset($photo)) {
                     $src = $photo->image_path();
                     echo $src;
